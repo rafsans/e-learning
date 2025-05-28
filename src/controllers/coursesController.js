@@ -14,4 +14,33 @@ const getAllCourses = async (req, res) => {
     }
 }
 
+const getCourseContent = async (req, res) => {
+    try {
+        const content = await courseModel.getCourseContent();
+        res.status(200).json({
+            status: "success",
+            message: "Content fetched successfully",
+            data: content
+        });
+    } catch (error) {
+        console.error("Error fetching content:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+const getCourseContentByCategory = async (req, res) => {
+    try {
+        const category = req.body;
+        const content = await courseModel.getByFilter(category);
+        res.status(200).json({
+            status: "success",
+            message: "Content fetched successfully",
+            data: content
+        });
+    } catch (error) {
+        console.error("Error fetching content:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
 export default {getAllCourses}
