@@ -1,5 +1,5 @@
 import express from "express";
-import appRouter from "../route/app.js"; // pastikan ekstensi `.js`
+import appRouter from "../route/api.js"; // pastikan ekstensi `.js`
 
 class App {
   constructor() {
