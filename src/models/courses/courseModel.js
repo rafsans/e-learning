@@ -8,6 +8,10 @@ const courseModel = {
             console.error("Error fetching courses:", error);
             throw error;
         }
+    },
+
+    async getCourseContent() {
+        
     }
 }
 
