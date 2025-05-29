@@ -5,11 +5,7 @@ import authRoute from './route/authRoute.js';
 
 app.use(express.json());
 app.use('/api/auth', authRoute);
+import App from "./app/app.js";
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+const appInstance = new App();
+appInstance.start(); // penting!

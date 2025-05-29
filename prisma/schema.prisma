@@ -6,16 +6,88 @@
 
 generator client {
   provider = "prisma-client-js"
-
+  //  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  password String
-  createdAt DateTime @default(now())
+
+model users {
+  id                Int              @id @default(autoincrement())
+  name              String
+  email             String           @unique
+  password          String
+  email_verified_at DateTime?        @default(now())
+  created_at        DateTime?        @default(now())
+  updated_at        DateTime?        @default(now())
+  courses           courses[]
+  userEnrollment    userEnrollment[]
+
+  @@map("users")
+}
+
+model category {
+  id         Int       @id @default(autoincrement()) @unique
+  name       String    @unique
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  courses    courses[]
+
+  @@map("category")
+}
+
+model courses {
+  id             Int              @id @default(autoincrement())
+  user_id        Int
+  user           users            @relation(fields: [user_id], references: [id])
+  category_id    Int
+  category       category         @relation(fields: [category_id], references: [id])
+  title          String           @unique
+  image          String
+  description    String
+  created_at     DateTime?        @default(now())
+  updated_at     DateTime?        @default(now())
+  courseSections courseSection[]
+  userEnrollment userEnrollment[]
+
+  @@map("course")
+}
+
+model courseSection {
+  id            Int                    @id @default(autoincrement())
+  course_id     Int
+  course        courses                @relation(fields: [course_id], references: [id])
+  title         String
+  description   String
+  created_at    DateTime?              @default(now())
+  updated_at    DateTime?              @default(now())
+  courseContent courseSectionContent[]
+
+  @@map("course_section")
+}
+
+model courseSectionContent {
+  id          Int           @id @default(autoincrement())
+  section_id  Int
+  section     courseSection @relation(fields: [section_id], references: [id])
+  title       String
+  description String
+  created_at  DateTime?     @default(now())
+  updated_at  DateTime?     @default(now())
+
+  @@map("course_section_content")
+}
+
+model userEnrollment {
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  user       users     @relation(fields: [user_id], references: [id])
+  course_id  Int
+  course     courses   @relation(fields: [course_id], references: [id])
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@map("user_enrollment")
 }
