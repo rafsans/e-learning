@@ -51,6 +51,7 @@ model courses {
   updated_at     DateTime?        @default(now())
   courseSections courseSection[]
   userEnrollment userEnrollment[]
+  courseList     courseList[]
 
   @@map("course")
 }
