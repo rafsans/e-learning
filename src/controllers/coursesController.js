@@ -49,33 +49,35 @@ const post = async (req, res) => {
 };
 
 const put = async (req, res) => {
-    const { id } = req.params;
-    const body = req.body;
-    try {
-        const updateCourse = await courseModel.put(parseInt(id), body);
-        res.status(200).json({
-            status: "success",
-            message: "Course fetched successfully",
-            data: updateCourse,
-          });
-    } catch (error) {
-        console.error("Error fetching course:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-      }
+  const { id } = req.params;
+  const body = req.body;
+  try {
+    const updateCourse = await courseModel.put(parseInt(id), body);
+    res.status(200).json({
+      status: "success",
+      message: "Course fetched successfully",
+      data: updateCourse,
+    });
+  } catch (error) {
+    console.error("Error fetching course:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 }
 
 const destroy = async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deleteCourse = await courseModel.delete(parseInt(id));
-        res.status(200).json({
-            status: "success",
-            message: "Course fetched successfully"
-          });
-    } catch (error) {
-        console.error("Error fetching course:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-      }
+  const { id } = req.params;
+  try {
+    const deleteCourse = await courseModel.delete(parseInt(id));
+    res.status(200).json({
+      status: "success",
+      message: "Course fetched successfully"
+    });
+  } catch (error) {
+    console.error("Error fetching course:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 }
+
+export { getAllCourses, getById, post, put, destroy };
 
 
