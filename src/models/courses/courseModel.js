@@ -9,26 +9,7 @@ const courseModel = {
             throw error;
         }
     },
-    async getCourseById (id) {
-        return await prisma.courses.findFirst({
-            where : {id}
-        })
-    },
-    async post (data){
-        return await prisma.courses.create({data})
-    },
-    async put(id, data){
-        return await prisma.courses.update({
-            where : {id},
-            data
-        })
-    },
 
-    async destroy(id){
-        return await prisma.courses.delete({
-            where : {id}
-        })
-    }
 }
 
 export default courseModel;

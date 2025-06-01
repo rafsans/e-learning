@@ -78,4 +78,4 @@ const destroy = async (req, res) => {
       }
 }
 
-export default { getAllCourses, getById, post, put, destroy };
+
