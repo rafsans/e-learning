@@ -69,7 +69,7 @@ model courseSection {
 }
 
 model courseSectionContent {
-  id          Int           @id @default(autoincrement())
+  id          Int           @id @default(autoincrement()) @unique
   section_id  Int
   section     courseSection @relation(fields: [section_id], references: [id])
   title       String
