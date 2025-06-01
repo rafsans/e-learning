@@ -55,6 +55,18 @@ model courses {
   @@map("course")
 }
 
+model courseList{
+  id            Int                    @id @default(autoincrement())
+  course_id     Int
+  course        courses                @relation(fields: [course_id], references: [id])
+  title         String
+  description   String
+  created_at    DateTime?              @default(now())
+  updated_at    DateTime?              @default(now())
+
+  @@map("course_list")
+}
+
 model courseSection {
   id            Int                    @id @default(autoincrement())
   course_id     Int
