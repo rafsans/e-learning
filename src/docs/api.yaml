@@ -1,0 +1,139 @@
+paths:
+  /register:
+    post:
+      summary: Registrasi user baru
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          description: Berhasil registrasi
+
+  /login:
+    post:
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Login berhasil
+
+  /users:
+    get:
+      summary: Mendapatkan semua user
+      responses:
+        200:
+          description: Daftar user berhasil diambil
+
+  /courses:
+    get:
+      summary: Mendapatkan semua course list
+      responses:
+        200:
+          description: Daftar course berhasil diambil
+
+    post:
+      summary: Membuat course baru (courseList)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                course_id:
+                  type: integer
+                  description: ID course yang direlasikan (foreign key)
+                  example: 1
+                title:
+                  type: string
+                  description: Judul course list
+                  example: "Belajar Node.js"
+                description:
+                  type: string
+                  description: Deskripsi course list
+                  example: "Materi lengkap belajar Node.js dari dasar hingga mahir"
+              required:
+                - course_id
+                - title
+                - description
+      responses:
+        201:
+          description: Course berhasil dibuat
+
+/courses/{id}:
+  get:
+    summary: Mendapatkan course berdasarkan ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Detail course ditemukan
+
+  put:
+    summary: Update course berdasarkan ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              course_id:
+                type: integer
+                description: ID course yang direlasikan (foreign key)
+                example: 1
+              title:
+                type: string
+                description: Judul course list
+                example: "Belajar Node.js Advanced"
+              description:
+                type: string
+                description: Deskripsi course list yang diperbarui
+                example: "Materi lengkap belajar Node.js tingkat lanjut"
+            required:
+              - course_id
+              - title
+              - description
+    responses:
+      200:
+        description: Course berhasil diperbarui
+
+  delete:
+    summary: Hapus course berdasarkan ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Course berhasil dihapus
