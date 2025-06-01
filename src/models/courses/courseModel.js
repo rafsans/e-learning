@@ -8,7 +8,8 @@ const courseModel = {
             console.error("Error fetching courses:", error);
             throw error;
         }
-    }
+    },
+
 }
 
 export default courseModel;

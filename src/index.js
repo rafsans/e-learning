@@ -1,7 +1,6 @@
 import express from "express";
 import authRoute from './route/api.js';
 import courseRoute from './route/api.js';
-
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './docs/swagger.js';
 

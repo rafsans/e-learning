@@ -6,7 +6,7 @@ import AuthController from '../controllers/AuthController.js';
 const appRouter = express.Router();
 
 appRouter.get('/course', coursesController.getAllCourses)
-appRouter.get('/users', usersController.getAllUser);
+appRouter.get('/users', usersController.getAllUser)
 
 // Courses List
 appRouter.post('/courses', coursesListController.create);     
