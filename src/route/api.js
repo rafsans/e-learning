@@ -4,6 +4,7 @@ import coursesListController from "../controllers/courseListController.js";
 import usersController from "../controllers/usersController.js";
 import AuthController from '../controllers/AuthController.js';
 import courseSectionController from "../controllers/courseSectionController.js";
+import courseContentController from "../controllers/courseContentController.js";
 
 const appRouter = express.Router();
 
@@ -22,6 +23,12 @@ appRouter.get('/courseSection/:id', courseSectionController.getCourseSectionById
 appRouter.post('/courseSection', courseSectionController.post)
 appRouter.put('/courseSection/:id', courseSectionController.put)
 appRouter.delete('/courseSection/:id', courseSectionController.destroy)
+
+// Course Content
+appRouter.get('/courseContent/:id', courseContentController.getById);
+appRouter.post('/courseContent', courseContentController.create);
+appRouter.put('/courseContent/:id', courseContentController.update);
+appRouter.delete('/courseContent/:id', courseContentController.destroy);
 
 // Course
 appRouter.get('/course', coursesController.getAllCourses)
