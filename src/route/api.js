@@ -48,11 +48,11 @@ appRouter.put('/course/:id', authMiddleware.verifyToken, updateCourse)
 appRouter.delete('/course/:id', authMiddleware.verifyToken, destroyCourse);
 
 // // Course Sections
-appRouter.get('/course-section/:course_id', getAllCourseSections)
+appRouter.get('/course-section/:course_id',authMiddleware.verifyToken, getAllCourseSections)
 // appRouter.get('/courseSection/:id', getCourseSectionById)
-appRouter.post('/course-section/:course_id', createCourseSection)
-appRouter.put('/course-section/:id', updateCourseSection)
-appRouter.delete('/course-section/:id', destroyCourseSection)
+appRouter.post('/course-section/:course_id',authMiddleware.verifyToken, createCourseSection)
+appRouter.put('/course-section/:id',authMiddleware.verifyToken, updateCourseSection)
+appRouter.delete('/course-section/:id',authMiddleware.verifyToken, destroyCourseSection)
 
 
 export default appRouter;
