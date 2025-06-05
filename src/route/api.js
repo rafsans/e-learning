@@ -3,9 +3,9 @@ import AuthController from '../controllers/AuthController.js';
 import categoryController from "../controllers/categoryController.js";
 import { getAllCourses, singleCourse, createCourse, updateCourse, destroyCourse } from "../controllers/coursesController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import { getAllCourseSections, getCourseSectionById, createCourseSection, updateCourseSection, destroyCourseSection } from "../controllers/courseSectionController.js";
 // import coursesListController from "../controllers/courseListController.js";
 // import usersController from "../controllers/usersController.js";
-// import courseSectionController from "../controllers/courseSectionController.js";
 // import courseContentController from "../controllers/courseContentController.js";
 
 const appRouter = express.Router();
@@ -19,12 +19,7 @@ const appRouter = express.Router();
 // appRouter.put('/coursesList/:id', coursesListController.update);
 // appRouter.delete('/coursesList/:id', coursesListController.delete);
 
-// // Course Sections
-// appRouter.get('/courseSection', courseSectionController.getAllCourseSections)
-// appRouter.get('/courseSection/:id', courseSectionController.getCourseSectionById)
-// appRouter.post('/courseSection', courseSectionController.post)
-// appRouter.put('/courseSection/:id', courseSectionController.put)
-// appRouter.delete('/courseSection/:id', courseSectionController.destroy)
+
 
 // // Course Content
 // appRouter.get('/courseContent/:id', courseContentController.getById);
@@ -51,6 +46,13 @@ appRouter.get('/course/:id', authMiddleware.verifyToken, singleCourse)
 appRouter.post('/course', authMiddleware.verifyToken, createCourse)
 appRouter.put('/course/:id', authMiddleware.verifyToken, updateCourse)
 appRouter.delete('/course/:id', authMiddleware.verifyToken, destroyCourse);
+
+// // Course Sections
+appRouter.get('/course-section/:course_id', getAllCourseSections)
+// appRouter.get('/courseSection/:id', getCourseSectionById)
+appRouter.post('/course-section/:course_id', createCourseSection)
+appRouter.put('/course-section/:id', updateCourseSection)
+appRouter.delete('/course-section/:id', destroyCourseSection)
 
 
 export default appRouter;
