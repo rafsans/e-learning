@@ -5,6 +5,7 @@ import { getAllCourses, singleCourse, createCourse, updateCourse, destroyCourse 
 import authMiddleware from "../middleware/authMiddleware.js";
 import { getAllCourseSections, getCourseSectionById, createCourseSection, updateCourseSection, destroyCourseSection } from "../controllers/courseSectionController.js";
 import userController from "../controllers/usersController.js";
+import contentController from "../controllers/courseSectionContentController.js";
 // import coursesListController from "../controllers/courseListController.js";
 // import usersController from "../controllers/usersController.js";
 // import courseContentController from "../controllers/courseContentController.js";
@@ -35,11 +36,11 @@ appRouter.post('/register', AuthController.register);
 appRouter.post('/login', AuthController.login);
 
 // User
-appRouter.get('/users', userController.getAllUser);
-appRouter.get('/users/:id', userController.getUserById);
-appRouter.post('/users', userController.createUser);
-appRouter.put('/users/:id', userController.updateUser);
-appRouter.delete('/users/:id', userController.deleteUser);
+appRouter.get('/users', authMiddleware.verifyToken, userController.getAllUser);
+appRouter.get('/users/:id', authMiddleware.verifyToken, userController.getUserById);
+appRouter.post('/users', authMiddleware.verifyToken, userController.createUser);
+appRouter.put('/users/:id', authMiddleware.verifyToken, userController.updateUser);
+appRouter.delete('/users/:id', authMiddleware.verifyToken, userController.deleteUser);
 
 //Category
 appRouter.get('/category', categoryController.getAllCategories);
@@ -61,6 +62,13 @@ appRouter.get('/course-section/:course_id',authMiddleware.verifyToken, getAllCou
 appRouter.post('/course-section/:course_id',authMiddleware.verifyToken, createCourseSection)
 appRouter.put('/course-section/:id',authMiddleware.verifyToken, updateCourseSection)
 appRouter.delete('/course-section/:id',authMiddleware.verifyToken, destroyCourseSection)
+
+// Course Section Content
+appRouter.get('/course-section-content/:section_id', authMiddleware.verifyToken, contentController.getAllContent)
+appRouter.post('/course-section-content/:section_id', authMiddleware.verifyToken, contentController.createContent)
+appRouter.put('/course-section-content/:id', authMiddleware.verifyToken, contentController.updateContent)
+appRouter.delete('/course-section-content/:id', authMiddleware.verifyToken, contentController.deleteContent)
+
 
 
 export default appRouter;

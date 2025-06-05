@@ -22,6 +22,14 @@ const userController = {
     async getUserById(req, res) {
         try {
             const id = parseInt(req.params.id);
+            const find = await usersModel.getById(id);
+            if(!find) {
+                return res.status(404).json({
+                    status: false,
+                    message: "User not found",
+                });
+            }
+
             const user = await usersModel.getById(id);
             res.status(200).json({
                 status: "success",
