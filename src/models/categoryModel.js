@@ -1,34 +1,31 @@
-import config from "../config.js";
+import prisma from "../db/config.js";
 
 const categoryModel = {
     async getAll() {
-        const categories = await config.category.findMany();
+        const categories = await prisma.category.findMany();
         return categories;
     },
     async getById(id) {
-        const category = await config.category.findUnique({
+        return await prisma.category.findUnique({
             where: {
                 id
             }
         });
-        return category;
     },
     async getByName(name) {
-        const category = await config.category.findUnique({
+        return await prisma.category.findUnique({
             where: {
                 name
             }
         });
-        return category;
     },
     async create(data) {
-        const category = await config.category.create({
+        return await prisma.category.create({
             data: { ...data }
         });
-        return data;
     },
     async update(id, data) {
-        const category = await config.category.update({
+        const category = await prisma.category.update({
             where: {
                 id
             },
@@ -37,7 +34,7 @@ const categoryModel = {
         return category;
     },
     async delete(id) {
-        const category = await config.category.delete({
+        const category = await prisma.category.delete({
             where: {
                 id
             }

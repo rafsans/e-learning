@@ -29,7 +29,7 @@ model users {
 }
 
 model category {
-  id         Int       @id @default(autoincrement()) @unique
+  id         Int       @id @default(autoincrement()) 
   name       String    @unique
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
@@ -51,21 +51,8 @@ model courses {
   updated_at     DateTime?        @default(now())
   courseSections courseSection[]
   userEnrollment userEnrollment[]
-  courseList     courseList[]
 
   @@map("course")
-}
-
-model courseList{
-  id            Int                    @id @default(autoincrement())
-  course_id     Int
-  course        courses                @relation(fields: [course_id], references: [id])
-  title         String
-  description   String
-  created_at    DateTime?              @default(now())
-  updated_at    DateTime?              @default(now())
-
-  @@map("course_list")
 }
 
 model courseSection {
