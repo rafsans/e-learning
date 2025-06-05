@@ -4,6 +4,7 @@ import categoryController from "../controllers/categoryController.js";
 import { getAllCourses, singleCourse, createCourse, updateCourse, destroyCourse } from "../controllers/coursesController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import { getAllCourseSections, getCourseSectionById, createCourseSection, updateCourseSection, destroyCourseSection } from "../controllers/courseSectionController.js";
+import userController from "../controllers/usersController.js";
 // import coursesListController from "../controllers/courseListController.js";
 // import usersController from "../controllers/usersController.js";
 // import courseContentController from "../controllers/courseContentController.js";
@@ -32,6 +33,13 @@ const appRouter = express.Router();
 // Auth
 appRouter.post('/register', AuthController.register);
 appRouter.post('/login', AuthController.login);
+
+// User
+appRouter.get('/users', userController.getAllUser);
+appRouter.get('/users/:id', userController.getUserById);
+appRouter.post('/users', userController.createUser);
+appRouter.put('/users/:id', userController.updateUser);
+appRouter.delete('/users/:id', userController.deleteUser);
 
 //Category
 appRouter.get('/category', categoryController.getAllCategories);
