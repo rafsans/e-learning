@@ -1,7 +1,7 @@
 import express from "express";
 import AuthController from '../controllers/AuthController.js';
 import categoryController from "../controllers/categoryController.js";
-import { getAllCourses, getById, createCourse, updateCourse, destroyCourse } from "../controllers/coursesController.js";
+import { getAllCourses, singleCourse, createCourse, updateCourse, destroyCourse } from "../controllers/coursesController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 // import coursesListController from "../controllers/courseListController.js";
 // import usersController from "../controllers/usersController.js";
@@ -47,7 +47,7 @@ appRouter.delete('/category/:id', categoryController.deleteCategory);
 
 // Course
 appRouter.get('/course', authMiddleware.verifyToken, getAllCourses)
-appRouter.get('/course/:id', authMiddleware.verifyToken, getById)
+appRouter.get('/course/:id', authMiddleware.verifyToken, singleCourse)
 appRouter.post('/course', authMiddleware.verifyToken, createCourse)
 appRouter.put('/course/:id', authMiddleware.verifyToken, updateCourse)
 appRouter.delete('/course/:id', authMiddleware.verifyToken, destroyCourse);
