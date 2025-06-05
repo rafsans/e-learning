@@ -15,7 +15,7 @@ const getAllCourses = async (req, res) => {
   }
 };
 
-const getById = async (req, res) => {
+const singleCourse = async (req, res) => {
   try {
     const { id } = req.params;
     const course = await courseModel.getCourseById(parseInt(id));
@@ -99,7 +99,7 @@ const updateCourse = async (req, res) => {
 const destroyCourse = async (req, res) => {
   try {
     const { id } = req.params;
-    const find = await courseModel.getById(parseInt(id));
+    const find = await courseModel.getCourseById(parseInt(id));
     if (!find) {
       return res.status(404).json({
         status: false,
@@ -108,14 +108,14 @@ const destroyCourse = async (req, res) => {
     }
     await courseModel.delete(parseInt(id));
     res.status(200).json({
-      status: "success",
-      message: "Course fetched successfully"
+      status: true,
+      message: "Course deleted successfully"
     });
   } catch (error) {
     res.status(500).json({ status: false, message: "Internal Server Error" });
   }
 }
 
-export { getAllCourses, getById, createCourse, updateCourse, destroyCourse };
+export { getAllCourses, singleCourse, createCourse, updateCourse, destroyCourse };
 
 
