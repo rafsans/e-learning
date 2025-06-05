@@ -9,15 +9,24 @@ const AuthController = {
   register: async (req, res) => {
     try {
       const body = req.body;
+      const find = await authModel.getByEmail(body.email);
+      if (find) {
+        return res.status(409).json({ status: false, message: 'Email already exists' });
+      }
       const { error } = registerSchema.validate(body, { abortEarly: false });
       if (error) {
         const validationError = error.details.map((err) => ({
           field: err.path[0],
-          message: err.message.replace(/"/g, ''),
+          message: err.message,
         }));
         return res.status(422).json({ status: false, message: 'Validation Error', errors: validationError });
       }
-      await authModel.register(body);
+      const data = {
+        name: body.name,
+        email: body.email,
+        password: await bcrypt.hash(body.password, 10),
+      }
+      await authModel.register(data);
       return res.status(201).json({ status: true, message: 'Success' });
     } catch (error) {
       return res.status(500).json({ status: false, message: 'Server Error' });
@@ -31,7 +40,7 @@ const AuthController = {
       if (error) {
         const validationError = error.details.map((err) => ({
           field: err.path[0],
-          message: err.message.replace(/"/g, ''),
+          message: err.message,
         }));
         return res.status(422).json({ status: false, message: 'Validation Error', errors: validationError });
       }
@@ -40,7 +49,7 @@ const AuthController = {
       if (!user) {
         return res.status(401).json({ status: false, message: 'Unauthorized' });
       }
-      const token = jwt.sign(user, process.env.SECRET_KEY);
+      const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, process.env.SECRET_KEY);
       return res.status(200).json({
         status: true, message: 'Success', data: {
           name: user.name,

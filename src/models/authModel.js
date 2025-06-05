@@ -6,6 +6,13 @@ const authModel = {
             data: { ...user }
         });
     },
+    async getByEmail(email) {
+        return await prisma.users.findUnique({
+            where: {
+                email: email
+            }
+        });
+    },
     async login(email) {
         return await prisma.users.findUnique({
             where: {

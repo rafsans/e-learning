@@ -16,10 +16,10 @@ const authMiddleware = {
                 message: 'Unauthorized'
             });
         }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded.user;
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        req.user = decoded;
         next();
     }
 }
 
-module.exports = authMiddleware;
+export default authMiddleware;
