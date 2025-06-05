@@ -40,12 +40,14 @@ const AuthController = {
       if (!user) {
         return res.status(401).json({ status: false, message: 'Unauthorized' });
       }
-      const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
-      return res.status(200).json({ status: true, message: 'Success', data:{
-        name: user.name,
-        email: user.email,
-        token: token
-      } });
+      const token = jwt.sign(user, process.env.SECRET_KEY);
+      return res.status(200).json({
+        status: true, message: 'Success', data: {
+          name: user.name,
+          email: user.email,
+          token: token
+        }
+      });
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }
