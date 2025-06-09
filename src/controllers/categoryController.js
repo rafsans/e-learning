@@ -7,7 +7,7 @@ const categoryController = {
             const categories = await categoryModel.getAll();
             res.status(200).json({
                 success: true,
-                message: "Get All Categories Successfully",
+                message: "Success",
                 data: categories,
             });
         } catch (error) {
@@ -36,15 +36,16 @@ const categoryController = {
             }
             const find = await categoryModel.getByName(body.name);
             if (find !== null) {
-                return res.status(409).json({
+                return res.status(422).json({
                     success: false,
-                    message: "Category already exists",
+                    message: "Validation Error",
+                    errors: [{ field: "name", message: "Category already exists" }],
                 });
             }
             await categoryModel.create(body);
             return res.status(201).json({
                 success: true,
-                message: "Category created successfully",
+                message: "Success",
             })
         } catch (error) {
             return res.status(500).json({
@@ -72,22 +73,30 @@ const categoryController = {
                     errors: validationError,
                 })
             }
-            const find = await categoryModel.getByName(body.name);
-            if (find !== null) {
-                return res.status(409).json({
+            const findId = await categoryModel.getById(parseInt(id));
+            if (!findId) {
+                return res.status(404).json({
                     success: false,
-                    message: "Category already exists",
+                    message: "Category not found",
+                });
+            }
+            const findName = await categoryModel.getByName(body.name);
+            if (findName !== null) {
+                return res.status(422).json({
+                    success: false,
+                    message: "Validation Error",
+                    errors: [{ field: "name", message: "Category already exists" }],
                 });
             }
             await categoryModel.update(parseInt(id), body);
             return res.status(200).json({
                 success: true,
-                message: "Category updated successfully",
+                message: "Success",
             })
         } catch (error) {
             return res.status(500).json({
                 success: false,
-                message: error.message,
+                message: 'Internal Server Error',
             });
         }
     },
@@ -104,7 +113,7 @@ const categoryController = {
             await categoryModel.delete(parseInt(id));
             return res.status(200).json({
                 success: true,
-                message: "Category deleted successfully",
+                message: "Success",
             })
         } catch (error) {
             return res.status(500).json({
