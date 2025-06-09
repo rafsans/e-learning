@@ -5,30 +5,38 @@ import courseSectionContentSchema from "../validation/courseSectionContentValida
 const courseSectionContentController = {
     async getAllContent(req, res) {
         try {
+            const { section_id } = req.params;
+            const findSection = await courseSectionModel.getSectionById(parseInt(section_id));
+            if (!findSection) {
+                return res.status(404).json({
+                    status: false,
+                    message: "Course Section not found",
+                });
+            }
             const content = await courseSectionContentModel.getAllContent();
             res.status(200).json({
-                status: "success",
-                message: "Course Content fetched successfully",
+                status: true,
+                message: "Success",
                 data: content
             });
         } catch (error) {
             return res.status(500).json({
                 success: false,
-                message: "Internal Server Error",
+                message: "Internal Server Error" + error.message,
             });
         }
     },
 
     async createContent(req, res) {
         try {
-            const find = await courseSectionModel.getSectionById(parseInt(req.params.section_id));
-            if(!find) {
+            const { section_id } = req.params;
+            const findSection = await courseSectionModel.getSectionById(parseInt(section_id));
+            if (!findSection) {
                 return res.status(404).json({
                     status: false,
-                    message: "Section Id not found",
+                    message: "Course Section not found",
                 });
             }
-            
             const body = req.body;
             const data = {
                 title: body.title,
@@ -47,43 +55,32 @@ const courseSectionContentController = {
                     errors: validationError,
                 });
             }
-
-
             await courseSectionContentModel.createContent(data);
             res.status(201).json({
                 status: true,
-                message: "Content created successfully",
+                message: "Success",
             });
         } catch (error) {
             return res.status(500).json({
                 success: false,
-                message: "Internal Server Error" + error,
+                message: "Internal Server Error",
             });
         }
     },
 
     async updateContent(req, res) {
         try {
-            const id = parseInt(req.params.id);
+            const { id } = req.params;
             const body = req.body;
-            const findSection = await courseSectionModel.getSectionById(parseInt(body.section_id));
-            if(!findSection) {
-                return res.status(404).json({
-                    status: false,
-                    message: "Section not found",
-                });
-            }
-
-            const findContent = await courseSectionContentModel.getContentById(id);
-            if(!findContent) {
+            const findContent = await courseSectionContentModel.getContentById(parseInt(id));
+            if (!findContent) {
                 return res.status(404).json({
                     status: false,
                     message: "Content not found",
                 });
             }
-
             const data = {
-                section_id: parseInt(body.section_id),
+                section_id: parseInt(findContent.section_id),
                 title: body.title,
                 description: body.description
             }
@@ -101,39 +98,39 @@ const courseSectionContentController = {
                 });
             }
 
-            await courseSectionContentModel.updateContent(id, data);
+            await courseSectionContentModel.updateContent(parseInt(id), data);
             res.status(200).json({
                 status: true,
-                message: "Content updated successfully",
+                message: "Success",
             });
         } catch (error) {
             return res.status(500).json({
                 success: false,
-                message: "Internal Server Error" + error,
+                message: "Internal Server Error"
             });
         }
     },
 
     async deleteContent(req, res) {
         try {
-            const id = parseInt(req.params.id);
-            const find = await courseSectionContentModel.getContentById(id);
-            if(!find) {
+            const { id } = req.params;
+            const find = await courseSectionContentModel.getContentById(parseInt(id));
+            if (!find) {
                 return res.status(404).json({
                     status: false,
                     message: "Content not found",
                 });
             }
 
-            await courseSectionContentModel.deleteContent(id);
+            await courseSectionContentModel.destroyContent(parseInt(id));
             res.status(200).json({
                 status: true,
-                message: "Content deleted successfully",
+                message: "Success",
             });
         } catch (error) {
             return res.status(500).json({
                 success: false,
-                message: "Internal Server Error",
+                message: "Internal Server Error" + error.message,
             })
         }
     }

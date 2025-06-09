@@ -8,8 +8,10 @@ const courseSectionModel = {
         });
     },
     async getSectionById(id) {
-        return await prisma.courseSection.findFirst({
-            where: { id }
+        return await prisma.courseSection.findUnique({
+            where: {
+                id
+            }
         });
     },
     async createSection(data) {
@@ -26,6 +28,7 @@ const courseSectionModel = {
         });
     },
     async destroySection(id) {
+        await prisma.courseSectionContent.deleteMany({ where: { course_section_id: id } });
         return await prisma.courseSection.delete({
             where: { id }
         });

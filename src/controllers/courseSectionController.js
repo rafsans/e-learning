@@ -1,13 +1,18 @@
 import courseSectionModel from "../models/courseSectionModel.js";
 import courseSectionSchema from "../validation/courseSectionValidation.js";
+import courseModel from "../models/courseModel.js";
 
 const getAllCourseSections = async (req, res) => {
     try {
         const { course_id } = req.params
+        const course = await courseModel.getCourseById(parseInt(course_id));
+        if (!course) {
+            return res.status(404).json({ status: false, message: "Course not found" });
+        }
         const courseSections = await courseSectionModel.getAllSection(parseInt(course_id));
         res.status(200).json({
             status: true,
-            message: "Course sections fetched successfully",
+            message: "Success",
             data: courseSections,
         });
     } catch (error) {
@@ -17,13 +22,17 @@ const getAllCourseSections = async (req, res) => {
 const getCourseSectionById = async (req, res) => {
     const { id } = req.params;
     try {
+        const course = await courseModel.getCourseById(parseInt(course_id));
+        if (!course) {
+            return res.status(404).json({ status: false, message: "Course not found" });
+        }
         const courseSection = await courseSectionModel.getCourseSectionById(parseInt(id));
         if (!courseSection) {
-            return res.status(404).json({status:false, message: "Course section not found" });
+            return res.status(404).json({ status: false, message: "Course section not found" });
         }
         res.status(200).json({
             status: true,
-            message: "Course section fetched successfully",
+            message: "Success",
             data: courseSection,
         });
     } catch (error) {
@@ -35,6 +44,10 @@ const createCourseSection = async (req, res) => {
     try {
         const { course_id } = req.params
         const body = req.body;
+        const course = await courseModel.getCourseById(parseInt(course_id));
+        if (!course) {
+            return res.status(404).json({ status: false, message: "Course not found" });
+        }
         const data = {
             course_id: parseInt(course_id),
             title: body.title,
@@ -55,7 +68,7 @@ const createCourseSection = async (req, res) => {
         await courseSectionModel.createSection(data);
         res.status(201).json({
             status: true,
-            message: "Course section created successfully",
+            message: "Success",
         });
     } catch (error) {
         res.status(500).json({ status: false, message: "Internal Server Error" });
@@ -66,12 +79,15 @@ const updateCourseSection = async (req, res) => {
     try {
         const { id } = req.params
         const body = req.body;
+        const findId = await courseSectionModel.getSectionById(parseInt(id));
+        if (!findId) {
+            return res.status(404).json({ status: false, message: "Course section not found" });
+        }
         const data = {
             id: parseInt(id),
             title: body.title,
             description: body.description
         }
-        console.log(data);
         const { error } = await courseSectionSchema.update.validate(body, { abortEarly: false });
         if (error) {
             const validationError = error.details.map((err) => ({
@@ -87,10 +103,10 @@ const updateCourseSection = async (req, res) => {
         await courseSectionModel.updateSection(data.id, body);
         res.status(200).json({
             status: true,
-            message: "Course section updated successfully",
+            message: "Success",
         });
     } catch (error) {
-        res.status(500).json({ status: false, message: "Internal Server Error" });
+        res.status(500).json({ status: false, message: "Internal Server Error" , data: error.message});
     }
 };
 
@@ -104,7 +120,7 @@ const destroyCourseSection = async (req, res) => {
         await courseSectionModel.destroySection(parseInt(id));
         res.status(200).json({
             status: true,
-            message: "Course section deleted successfully",
+            message: "Success",
         });
     } catch (error) {
         res.status(500).json({ status: false, message: "Internal Server Error" });
