@@ -19,6 +19,7 @@ model users {
   name              String
   email             String           @unique
   password          String
+  role              Role             @default(user)
   email_verified_at DateTime?        @default(now())
   created_at        DateTime?        @default(now())
   updated_at        DateTime?        @default(now())
@@ -26,6 +27,11 @@ model users {
   userEnrollment    userEnrollment[]
 
   @@map("users")
+}
+
+enum Role {
+  admin
+  user
 }
 
 model category {
@@ -56,7 +62,7 @@ model courses {
 }
 
 model courseSection {
-  id            Int                    @id @default(autoincrement())
+  id            Int                    @id @default(autoincrement()) @unique
   course_id     Int
   course        courses                @relation(fields: [course_id], references: [id])
   title         String
