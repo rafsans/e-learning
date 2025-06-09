@@ -1,12 +1,12 @@
 import express from "express";
 import routes from './route/api.js';
-import courseRoute from './route/api.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './docs/swagger.js';
 
-const port = 3000;
+const port = process.env.PORT;
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/api/', routes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
