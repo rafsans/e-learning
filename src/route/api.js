@@ -6,29 +6,8 @@ import authMiddleware from "../middleware/authMiddleware.js";
 import { getAllCourseSections, getCourseSectionById, createCourseSection, updateCourseSection, destroyCourseSection } from "../controllers/courseSectionController.js";
 import userController from "../controllers/usersController.js";
 import contentController from "../controllers/courseSectionContentController.js";
-// import coursesListController from "../controllers/courseListController.js";
-// import usersController from "../controllers/usersController.js";
-// import courseContentController from "../controllers/courseContentController.js";
 
 const appRouter = express.Router();
-
-// appRouter.get('/users', usersController.getAllUser)
-
-// Courses List
-// appRouter.post('/coursesList', coursesListController.create);
-// appRouter.get('/coursesList', coursesListController.getAll);
-// appRouter.get('/coursesList/:id', coursesListController.getById);
-// appRouter.put('/coursesList/:id', coursesListController.update);
-// appRouter.delete('/coursesList/:id', coursesListController.delete);
-
-
-
-// // Course Content
-// appRouter.get('/courseContent/:id', courseContentController.getById);
-// appRouter.post('/courseContent', courseContentController.create);
-// appRouter.put('/courseContent/:id', courseContentController.update);
-// appRouter.delete('/courseContent/:id', courseContentController.destroy);
-
 
 
 // Auth
