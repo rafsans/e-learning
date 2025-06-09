@@ -18,6 +18,9 @@ const courseModel = {
             }
         });
     },
+    async getCourseByTitle(title) {
+        return await prisma.courses.findUnique({ where: { title } });
+    },
     async getCourseById(id) {
         return await prisma.courses.findUnique({
             where: { id },
@@ -53,9 +56,16 @@ const courseModel = {
             data: { ...data }
         });
     },
-    async delete(id) {
-        return await prisma.courses.delete({ where: { id } });
-    }
+    async updateImage(id, image) {
+    return await prisma.courses.update({
+        where: { id },
+        data: { image }
+    });
+},
+    async delete (id) {
+    await prisma.courseSection.deleteMany({ where: { course_id: id } });
+    return await prisma.courses.delete({ where: { id } });
+}
 }
 
 export default courseModel;

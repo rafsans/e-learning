@@ -7,7 +7,7 @@ const getAllCourses = async (req, res) => {
     const courses = await courseModel.getAllCourses();
     res.status(200).json({
       status: true,
-      message: "Courses fetched successfully",
+      message: "Success",
       data: courses,
     });
   } catch (error) {
@@ -24,7 +24,7 @@ const singleCourse = async (req, res) => {
     }
     res.status(200).json({
       status: true,
-      message: "Course fetched successfully",
+      message: "Success",
       data: course,
     });
   } catch (error) {
@@ -42,6 +42,14 @@ const createCourse = async (req, res) => {
       title: body.title,
       image: image,
       description: body.description
+    }
+    const findTitle = await courseModel.getCourseByTitle(body.title);
+    if (findTitle) {
+      return res.status(422).json({
+        success: false,
+        message: "Validation Error",
+        errors: [{ field: "title", message: "Course title already exists" }],
+      });
     }
     const { error } = courseSchema.create.validate(body, {
       abortEarly: false,
@@ -61,7 +69,7 @@ const createCourse = async (req, res) => {
     await courseModel.create(data);
     res.status(201).json({
       status: true,
-      message: "Course created successfully",
+      message: "Success",
     });
   } catch (error) {
     res.status(500).json({ status: false, message: "Internal Server Error", data: error.message });
@@ -72,6 +80,24 @@ const updateCourse = async (req, res) => {
   try {
     const { id } = req.params;
     const body = req.body;
+    const data = {
+      user_id: req.user.id,
+      category_id: parseInt(body.category_id),
+      title: body.title,
+      description: body.description
+    }
+    if (body.image != null) {
+      const image = await imageServices.uploadImage(body.image, 'courses');
+      await courseModel.updateImage(parseInt(id), image);
+    }
+    const findTitle = await courseModel.getCourseByTitle(body.title);
+    if (findTitle) {
+      return res.status(422).json({
+        success: false,
+        message: "Validation Error",
+        errors: [{ field: "title", message: "Course title already exists" }],
+      });
+    }
     const { error } = courseSchema.update.validate(body, {
       abortEarly: false,
     });
@@ -86,10 +112,10 @@ const updateCourse = async (req, res) => {
         errors: validationError,
       })
     }
-    await courseModel.update(parseInt(id), body);
+    await courseModel.update(parseInt(id), data);
     res.status(200).json({
       status: true,
-      message: "Course updated successfully",
+      message: "Success",
     });
   } catch (error) {
     res.status(500).json({ status: false, message: "Internal Server Error" });
@@ -109,10 +135,10 @@ const destroyCourse = async (req, res) => {
     await courseModel.delete(parseInt(id));
     res.status(200).json({
       status: true,
-      message: "Course deleted successfully"
+      message: "Success",
     });
   } catch (error) {
-    res.status(500).json({ status: false, message: "Internal Server Error" });
+    res.status(500).json({ status: false, message: "Internal Server Error", data: error.message });
   }
 }
 

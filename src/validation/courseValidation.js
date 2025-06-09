@@ -36,6 +36,9 @@ const courseSchema = {
             "string.min": "Title minimal 3 karakter",
             "any.required": "Title wajib diisi",
         }),
+        image: Joi.string().messages({
+            "string.empty": "Image tidak boleh kosong",
+        }),
         description: Joi.string().min(3).max(30).required().messages({
             "string.base": "Description harus berupa string",
             "string.empty": "Description tidak boleh kosong",
