@@ -11,7 +11,7 @@ const AuthController = {
       const body = req.body;
       const find = await authModel.getByEmail(body.email);
       if (find) {
-        return res.status(409).json({ status: false, message: 'Email already exists' });
+        return res.status(422).json({ status: false, message: 'Validation Error', errors: [{ field: 'email', message: 'Email already exists' }],});
       }
       const { error } = registerSchema.validate(body, { abortEarly: false });
       if (error) {
@@ -44,12 +44,19 @@ const AuthController = {
         }));
         return res.status(422).json({ status: false, message: 'Validation Error', errors: validationError });
       }
-
-      const user = await authModel.login(body.email);
-      if (!user) {
-        return res.status(401).json({ status: false, message: 'Unauthorized' });
+      const findEmail = await authModel.getByEmail(body.email);
+      if (!findEmail) {
+        return res.status(422).json({ status: false, message: 'Validation Error', errors: [{ field: 'email', message: 'Email not found' }] });
       }
-      const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, process.env.SECRET_KEY);
+      const password = await bcrypt.compare(body.password, findEmail.password);
+      const psw = await bcrypt.hash(body.password, 10);
+      console.log(psw)
+      console.log(findEmail);
+      if (!password) {
+        return res.status(422).json({ status: false, message: 'Validation Error', errors: [{ field: 'password', message: 'Password not match' }] });
+      }
+      const user = await authModel.login(body.email);
+      const token = jwt.sign({ id: user.id, email: user.email, name: user.name, role: user.role }, process.env.SECRET_KEY);
       return res.status(200).json({
         status: true, message: 'Success', data: {
           name: user.name,
