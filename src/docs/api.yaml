@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Web Service API
+  title: E-Learning API
   version: 1.0.0
 servers:
   - url: http://localhost:3000/api
@@ -37,6 +37,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SuccessResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
   /login:
     post:
       tags:
@@ -61,13 +67,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
   /category:
     get:
       tags:
         - Category
       summary: Get All Categories
-      security: 
-          - bearerAuth: []
+      security:
+        - bearerAuth: []
       responses:
         200:
           description: Success
@@ -81,6 +93,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
     post:
       tags:
         - Category
@@ -99,7 +117,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SuccessResponse" 
+                $ref: "#/components/schemas/SuccessResponse"
         422:
           description: Validation Error
           content:
@@ -112,6 +130,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
   /category/{id}:
     put:
       tags:
@@ -155,8 +179,14 @@ paths:
           description: Unauthorized
           content:
             application/json:
-              schema: 
+              schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
     delete:
       tags:
         - Category
@@ -189,13 +219,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
   /course:
     get:
       tags:
         - Courses
       summary: Get All Courses
-      security: 
-          - bearerAuth: []
+      security:
+        - bearerAuth: []
       responses:
         200:
           description: Success
@@ -209,6 +245,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
     post:
       tags:
         - Courses
@@ -240,6 +282,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
   /course/{id}:
     get:
       tags:
@@ -273,6 +321,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NotFoundResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
     put:
       tags:
         - Courses
@@ -317,6 +371,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NotFoundResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
     delete:
       tags:
         - Courses
@@ -349,13 +409,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
   /course-section/{course_id}:
     get:
       tags:
         - Course Sections
       summary: Get All Course Sections
-      security: 
-          - bearerAuth: []
+      security:
+        - bearerAuth: []
       parameters:
         - name: course_id
           description: Course ID
@@ -376,6 +442,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
     post:
       tags:
         - Course Sections
@@ -414,6 +486,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ValidationResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
     put:
       tags:
         - Course Sections
@@ -458,6 +536,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NotFoundResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
     delete:
       tags:
         - Course Sections
@@ -490,13 +574,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
   /course-section-content/{section_id}:
     get:
       tags:
         - Course Section Contents
       summary: Get All Course Section Contents
-      security: 
-          - bearerAuth: []
+      security:
+        - bearerAuth: []
       parameters:
         - name: section_id
           description: Section ID
@@ -517,6 +607,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
     post:
       tags:
         - Course Section Contents
@@ -555,6 +651,164 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ValidationResponse"
+  /course-section-content/{id}:
+    put:
+      tags:
+        - Course Section Contents
+      summary: Update Course Section Content
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          description: Section ID
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseSectionContentRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedResponse"
+        422:
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationResponse"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
+    delete:
+      tags:
+        - Course Section Contents
+      summary: Delete Course Section Content
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          description: Section ID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedResponse"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
+  /course-enrollment:
+    get:
+      tags:
+        - Course Enrollments
+      summary: Get All Course Enrollments
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseEnrollmentResponseWithData"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"
+    post:
+      tags:
+        - Course Enrollments
+      summary: Create Course Enrollment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseEnrollmentRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedResponse"
+        409:
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConflictResponse"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerErrorResponse"        
 components:
   securitySchemes:
     bearerAuth:
@@ -563,15 +817,15 @@ components:
       bearerFormat: JWT
   schemas:
     RegisterRequest:
-        type: object
-        properties:
-          email:
-            type: string
-            format: email
-          name:
-            type: string
-          password:
-            type: string
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        password:
+          type: string
     LoginRequest:
       type: object
       properties:
@@ -635,10 +889,10 @@ components:
               title:
                 type: string
                 example: "Course 1"
-              image: 
+              image:
                 type: string
                 example: "https://example.com/image.jpg"
-              description: 
+              description:
                 type: string
                 example: "Description of course 1"
               created_at:
@@ -650,8 +904,8 @@ components:
               user:
                 type: object
                 properties:
-                  name: 
-                    type: string 
+                  name:
+                    type: string
                     example: "John Doe"
                   email:
                     type: string
@@ -820,3 +1074,83 @@ components:
         description:
           type: string
           example: "Description of content 1"
+    ServerErrorResponse:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "Internal Server Error"
+    CourseEnrollmentRequest:
+      type: object
+      properties:
+        course_id:
+          type: number
+          example: 1
+    CourseEnrollmentResponseWithData:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Success"
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                example: 1
+              user_id:
+                type: number
+                example: 1
+              course_id:
+                type: number
+                example: 1
+              created_at:
+                type: string
+                example: "2021-01-01T00:00:00.000Z"
+              updated_at:
+                type: string
+                example: "2021-01-01T00:00:00.000Z"
+              course:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 1
+                  user_id:
+                    type: number
+                    example: 1
+                  category_id:
+                    type: number
+                    example: 1
+                  title:
+                    type: string
+                    example: "Course 1"
+                  image:
+                    type: string
+                    example: "https://example.com/image.jpg"
+                  description:
+                    type: string
+                    example: "Description of course 1"
+                  created_at:
+                    type: string
+                    example: "2021-01-01T00:00:00.000Z"
+                  updated_at:
+                    type: string
+                    example: "2021-01-01T00:00:00.000Z"
+    ConflictResponse:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "User already enrolled in this course"
