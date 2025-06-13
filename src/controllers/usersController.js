@@ -7,8 +7,8 @@ const userController = {
         try {
             const users = await usersModel.getAll();
             res.status(200).json({
-                status: "success",
-                message: "Users fetched successfully",
+                status: true,
+                message: "Success",
                 data: users
             });
         } catch (error) {
@@ -32,8 +32,8 @@ const userController = {
 
             const user = await usersModel.getById(id);
             res.status(200).json({
-                status: "success",
-                message: "User fetched successfully",
+                status: true,
+                message: "Success",
                 data: user
             });
         } catch (error) {
@@ -72,8 +72,8 @@ const userController = {
 
             await usersModel.create(req.body);
             res.status(201).json({
-                status: "success",
-                message: "User created successfully",
+                status: true,
+                message: "Success",
             });
 
         } catch (error) {
@@ -113,8 +113,8 @@ const userController = {
 
             await usersModel.update(id, req.body);
             res.status(200).json({
-                status: "success",
-                message: "User updated successfully",
+                status: true,
+                message: "Success",
             });
         } catch (error) {
             return res.status(500).json({
@@ -138,7 +138,7 @@ const userController = {
             await usersModel.delete(id);
             return res.status(200).json({
                 status: true,
-                message: "User deleted successfully",
+                message: "Success",
             })
         } catch (error) {
             return res.status(500).json({
