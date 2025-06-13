@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-//  output   = "../src/generated/prisma"
+  //  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -15,10 +15,11 @@ datasource db {
 }
 
 model users {
-  id                Int       @id @default(autoincrement())
+  id                Int              @id @default(autoincrement())
   name              String
   email             String           @unique
   password          String
+  role              Role             @default(user)
   email_verified_at DateTime?        @default(now())
   created_at        DateTime?        @default(now())
   updated_at        DateTime?        @default(now())
@@ -28,9 +29,14 @@ model users {
   @@map("users")
 }
 
+enum Role {
+  admin
+  user
+}
+
 model category {
-  id         Int       @id @default(autoincrement())
-  name       String
+  id         Int       @id @default(autoincrement()) 
+  name       String    @unique
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
   courses    courses[]
@@ -41,7 +47,7 @@ model category {
 model courses {
   id             Int              @id @default(autoincrement())
   user_id        Int
-  user           users           @relation(fields: [user_id], references: [id])
+  user           users            @relation(fields: [user_id], references: [id])
   category_id    Int
   category       category         @relation(fields: [category_id], references: [id])
   title          String           @unique
@@ -56,7 +62,7 @@ model courses {
 }
 
 model courseSection {
-  id            Int                    @id @default(autoincrement())
+  id            Int                    @id @default(autoincrement()) @unique
   course_id     Int
   course        courses                @relation(fields: [course_id], references: [id])
   title         String
@@ -69,7 +75,7 @@ model courseSection {
 }
 
 model courseSectionContent {
-  id          Int           @id @default(autoincrement())
+  id          Int           @id @default(autoincrement()) @unique
   section_id  Int
   section     courseSection @relation(fields: [section_id], references: [id])
   title       String
@@ -81,10 +87,10 @@ model courseSectionContent {
 }
 
 model userEnrollment {
-  id        Int       @id @default(autoincrement())
-  user_id   Int
-  user      users     @relation(fields: [user_id], references: [id])
-  course_id  Int
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  user       users     @relation(fields: [user_id], references: [id])
+  course_id  Int       
   course     courses   @relation(fields: [course_id], references: [id])
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())

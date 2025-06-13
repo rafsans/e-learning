@@ -3,7 +3,7 @@ import routes from './route/api.js';
 import swaggerUi from 'swagger-ui-express';
 import yaml from 'yamljs';
 
-const port = process.env.PORT;
+const port = 4000;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
