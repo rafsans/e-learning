@@ -6,6 +6,7 @@ import authMiddleware from "../middleware/authMiddleware.js";
 import { getAllCourseSections, getCourseSectionById, createCourseSection, updateCourseSection, destroyCourseSection } from "../controllers/courseSectionController.js";
 import userController from "../controllers/usersController.js";
 import contentController from "../controllers/courseSectionContentController.js";
+import usersEnrollmentController from "../controllers/usersEnrollmentController.js";
 
 const appRouter = express.Router();
 
@@ -47,6 +48,11 @@ appRouter.get('/course-section-content/:section_id', authMiddleware.verifyToken,
 appRouter.post('/course-section-content/:section_id', authMiddleware.verifyToken, contentController.createContent)
 appRouter.put('/course-section-content/:id', authMiddleware.verifyToken, contentController.updateContent)
 appRouter.delete('/course-section-content/:id', authMiddleware.verifyToken, contentController.deleteContent)
+
+appRouter.get('/course-enrollment', authMiddleware.verifyToken, usersEnrollmentController.getAllEnrollment)
+appRouter.post('/course-enrollment', authMiddleware.verifyToken, usersEnrollmentController.addEnrollment)
+// approutes.put('/course-enrollment/:id', authMiddleware.verifyToken, courseEnrollmentController.updateEnrollment)
+// approutes.delete('/course-enrollment/:id', authMiddleware.verifyToken, courseEnrollmentController.deleteEnrollment)
 
 
 
