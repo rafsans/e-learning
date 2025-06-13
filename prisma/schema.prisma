@@ -90,7 +90,7 @@ model userEnrollment {
   id         Int       @id @default(autoincrement())
   user_id    Int
   user       users     @relation(fields: [user_id], references: [id])
-  course_id  Int
+  course_id  Int       
   course     courses   @relation(fields: [course_id], references: [id])
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
