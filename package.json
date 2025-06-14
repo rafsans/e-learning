@@ -1,10 +1,10 @@
 {
   "name": "e-len",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "dev": "node --watch src/dev.js",
-    "pm": "pm2 start src/index.js --watch",
+    "pm2": "pm2 start src/index.js --watch --name e-learning ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
