@@ -5,7 +5,8 @@ const usersEnrollmentModel = {
         return await prisma.userEnrollment.findFirst({
             where: {
                 user_id: id,
-                course_id: course_id
+                course_id: course_id,
+                deleted_at: null
             },
         });
     },
