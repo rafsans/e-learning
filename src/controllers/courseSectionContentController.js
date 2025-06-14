@@ -85,6 +85,14 @@ const courseSectionContentController = {
                 description: body.description
             }
 
+            const findSection = await courseSectionModel.getSectionById(data.section_id);
+            console.log(findSection);
+            if (!findSection) {
+                return res.status(404).json({
+                    status: false,
+                    message: "Course Section not found",
+                });
+            }
             const { error } = await courseSectionContentSchema.update.validate(data, { abortEarly: false });
             if (error) {
                 const validationError = error.details.map((err) => ({
@@ -97,7 +105,6 @@ const courseSectionContentController = {
                     errors: validationError,
                 });
             }
-
             await courseSectionContentModel.updateContent(parseInt(id), data);
             res.status(200).json({
                 status: true,
@@ -130,7 +137,7 @@ const courseSectionContentController = {
         } catch (error) {
             return res.status(500).json({
                 success: false,
-                message: "Internal Server Error" + error.message,
+                message: "Internal Server Error",
             })
         }
     }
