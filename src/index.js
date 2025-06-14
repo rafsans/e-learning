@@ -13,7 +13,8 @@ app.use('/api-docs', swaggerUi.serve, (req, res, next) => {
   const swaggerDocument = yaml.load('./src/docs/api.yaml');
   swaggerUi.setup(swaggerDocument)(req, res, next);
 });
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
-    console.log(`Swagger UI available at http://localhost:${port}/api-docs`);
+  console.log(`Swagger UI available at http://localhost:${port}/api-docs`);
 });
