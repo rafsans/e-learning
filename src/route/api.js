@@ -23,11 +23,11 @@ appRouter.put('/users/:id', authMiddleware.verifyToken, userController.updateUse
 appRouter.delete('/users/:id', authMiddleware.verifyToken, userController.deleteUser);
 
 //Category
-appRouter.get('/category', categoryController.getAllCategories);
+appRouter.get('/category', authMiddleware.verifyToken, categoryController.getAllCategories);
 // appRouter.get('/category/:id', categoryController.getCategoryById);
-appRouter.post('/category', categoryController.createCategory);
-appRouter.put('/category/:id', categoryController.updateCategory);
-appRouter.delete('/category/:id', categoryController.deleteCategory);
+appRouter.post('/category', authMiddleware.verifyToken, categoryController.createCategory);
+appRouter.put('/category/:id', authMiddleware.verifyToken, categoryController.updateCategory);
+appRouter.delete('/category/:id', authMiddleware.verifyToken, categoryController.deleteCategory);
 
 // Course
 appRouter.get('/course', authMiddleware.verifyToken, getAllCourses)
@@ -37,11 +37,11 @@ appRouter.put('/course/:id', authMiddleware.verifyToken, updateCourse)
 appRouter.delete('/course/:id', authMiddleware.verifyToken, destroyCourse);
 
 // // Course Sections
-appRouter.get('/course-section/:course_id',authMiddleware.verifyToken, getAllCourseSections)
+appRouter.get('/course-section/:course_id', authMiddleware.verifyToken, getAllCourseSections)
 // appRouter.get('/courseSection/:id', getCourseSectionById)
-appRouter.post('/course-section/:course_id',authMiddleware.verifyToken, createCourseSection)
-appRouter.put('/course-section/:id',authMiddleware.verifyToken, updateCourseSection)
-appRouter.delete('/course-section/:id',authMiddleware.verifyToken, destroyCourseSection)
+appRouter.post('/course-section/:course_id', authMiddleware.verifyToken, createCourseSection)
+appRouter.put('/course-section/:id', authMiddleware.verifyToken, updateCourseSection)
+appRouter.delete('/course-section/:id', authMiddleware.verifyToken, destroyCourseSection)
 
 // Course Section Content
 appRouter.get('/course-section-content/:section_id', authMiddleware.verifyToken, contentController.getAllContent)
