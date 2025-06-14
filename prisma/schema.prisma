@@ -39,6 +39,7 @@ model category {
   name       String    @unique
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
+  deleted_at DateTime?
   courses    courses[]
 
   @@map("category")
@@ -55,6 +56,7 @@ model courses {
   description    String
   created_at     DateTime?        @default(now())
   updated_at     DateTime?        @default(now())
+  deleted_at     DateTime?
   courseSections courseSection[]
   userEnrollment userEnrollment[]
 
@@ -69,6 +71,7 @@ model courseSection {
   description   String
   created_at    DateTime?              @default(now())
   updated_at    DateTime?              @default(now())
+  deleted_at    DateTime?
   courseContent courseSectionContent[]
 
   @@map("course_section")
@@ -82,6 +85,7 @@ model courseSectionContent {
   description String
   created_at  DateTime?     @default(now())
   updated_at  DateTime?     @default(now())
+  deleted_at  DateTime?
 
   @@map("course_section_content")
 }
