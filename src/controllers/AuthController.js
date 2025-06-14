@@ -11,7 +11,7 @@ const AuthController = {
       const body = req.body;
       const find = await authModel.getByEmail(body.email);
       if (find) {
-        return res.status(422).json({ status: false, message: 'Validation Error', errors: [{ field: 'email', message: 'Email already exists' }],});
+        return res.status(422).json({ status: false, message: 'Validation Error', errors: [{ field: 'email', message: 'Email already exists' }], });
       }
       const { error } = registerSchema.validate(body, { abortEarly: false });
       if (error) {
@@ -29,7 +29,7 @@ const AuthController = {
       await authModel.register(data);
       return res.status(201).json({ status: true, message: 'Success' });
     } catch (error) {
-      return res.status(500).json({ status: false, message: 'Server Error' });
+      return res.status(500).json({ status: false, message: 'Internal Server Error' });
     }
   },
 
@@ -65,7 +65,7 @@ const AuthController = {
         }
       });
     } catch (error) {
-      return res.status(500).json({ status: false, message: error.message });
+      return res.status(500).json({ status: false, message: 'Internal Server Error' });
     }
   }
 
