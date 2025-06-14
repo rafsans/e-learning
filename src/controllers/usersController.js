@@ -103,6 +103,14 @@ const userController = {
                 });
             }
 
+            const findId = await usersModel.getById(id);
+            if(!findId) {
+                return res.status(404).json({
+                    success: false,
+                    message: "User not found",
+                });
+            }
+
             const find = await usersModel.getByEmail(req.body.email);
             if(find !== null) {
                 return res.status(409).json({
