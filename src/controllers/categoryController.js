@@ -113,12 +113,12 @@ const categoryController = {
             await categoryModel.delete(parseInt(id));
             return res.status(200).json({
                 success: true,
-                message: "Success",
-            })
+                message: "Success"        
+            });
         } catch (error) {
             return res.status(500).json({
                 success: false,
-                message: "Internal Server Error",
+                message: "Internal Server Error"
             });
         }
     }

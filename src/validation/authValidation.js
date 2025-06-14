@@ -3,6 +3,7 @@ import joi from "joi";
 const registerSchema = joi.object({
     email: joi.string().email().required().messages({
         "string.email": "Email tidak valid",
+        "string.empty": "Email tidak boleh kosong",
         "any.required": "Email wajib diisi",
     }),
     name: joi.string().min(3).max(30).required().messages({
@@ -22,6 +23,7 @@ const registerSchema = joi.object({
 const loginSchema = joi.object({
     email: joi.string().email().required().messages({
         "string.email": "Email tidak valid",
+        "string.empty": "Email tidak boleh kosong",
         "any.required": "Email wajib diisi",
     }),
     password: joi.string().min(6).max(20).required().messages({

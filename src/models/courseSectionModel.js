@@ -3,14 +3,16 @@ const courseSectionModel = {
     async getAllSection(id) {
         return await prisma.courseSection.findMany({
             where: {
-                course_id: id 
+                course_id: id,
+                deleted_at: null 
             }
         });
     },
     async getSectionById(id) {
         return await prisma.courseSection.findUnique({
             where: {
-                id
+                id,
+                deleted_at: null
             }
         });
     },
@@ -22,15 +24,18 @@ const courseSectionModel = {
     async updateSection(id, data) {
         return await prisma.courseSection.update({
             where:{
-                id
+                id,
+                deleted_at: null
             },
             data: { ...data }
         });
     },
     async destroySection(id) {
-        await prisma.courseSectionContent.deleteMany({ where: { course_section_id: id } });
-        return await prisma.courseSection.delete({
-            where: { id }
+        return await prisma.courseSection.update({
+            where: { id },
+            data:{
+                deleted_at: new Date()
+            }
         });
     }
 };

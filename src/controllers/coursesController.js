@@ -1,6 +1,7 @@
 import courseModel from "../models/courseModel.js";
 import courseSchema from "../validation/courseValidation.js";
 import imageServices from "../services/imageServices.js";
+import categoryModel from "../models/categoryModel.js";
 
 const getAllCourses = async (req, res) => {
   try {
@@ -43,6 +44,10 @@ const createCourse = async (req, res) => {
       image: image,
       description: body.description
     }
+    const findCategory = await categoryModel.getById(data.category_id);
+    if (!findCategory) {
+      return res.status(404).json({ status: false, message: "Category not found" });
+    }
     const findTitle = await courseModel.getCourseByTitle(body.title);
     if (findTitle) {
       return res.status(422).json({
@@ -72,7 +77,7 @@ const createCourse = async (req, res) => {
       message: "Success",
     });
   } catch (error) {
-    res.status(500).json({ status: false, message: "Internal Server Error", data: error.message });
+    res.status(500).json({ status: false, message: "Internal Server Error" });
   }
 };
 
@@ -85,18 +90,6 @@ const updateCourse = async (req, res) => {
       category_id: parseInt(body.category_id),
       title: body.title,
       description: body.description
-    }
-    if (body.image != null) {
-      const image = await imageServices.uploadImage(body.image, 'courses');
-      await courseModel.updateImage(parseInt(id), image);
-    }
-    const findTitle = await courseModel.getCourseByTitle(body.title);
-    if (findTitle) {
-      return res.status(422).json({
-        success: false,
-        message: "Validation Error",
-        errors: [{ field: "title", message: "Course title already exists" }],
-      });
     }
     const { error } = courseSchema.update.validate(body, {
       abortEarly: false,
@@ -112,6 +105,27 @@ const updateCourse = async (req, res) => {
         errors: validationError,
       })
     }
+    if (body.image != null) {
+      const image = await imageServices.uploadImage(body.image, 'courses');
+      await courseModel.updateImage(parseInt(id), image);
+    }
+    const findCategory = await categoryModel.getById(data.category_id);
+    if (!findCategory) {
+      return res.status(404).json({ status: false, message: "Category not found" });
+    }
+    const findCourse = await courseModel.getCourseById(parseInt(id));
+    if (!findCourse) {
+      return res.status(404).json({ status: false, message: "Course not found" });
+    }
+    const findTitle = await courseModel.getCourseByTitle(body.title);
+    if (findTitle) {
+      return res.status(422).json({
+        success: false,
+        message: "Validation Error",
+        errors: [{ field: "title", message: "Course title already exists" }],
+      });
+    }
+
     await courseModel.update(parseInt(id), data);
     res.status(200).json({
       status: true,
@@ -138,7 +152,7 @@ const destroyCourse = async (req, res) => {
       message: "Success",
     });
   } catch (error) {
-    res.status(500).json({ status: false, message: "Internal Server Error", data: error.message });
+    res.status(500).json({ status: false, message: "Internal Server Error"});
   }
 }
 

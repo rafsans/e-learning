@@ -3,6 +3,9 @@ import prisma from "../db/config.js";
 const courseModel = {
     async getAllCourses() {
         return await prisma.courses.findMany({
+            where:{
+                deleted_at: null
+            },
             include: {
                 user: {
                     select: {
@@ -57,15 +60,19 @@ const courseModel = {
         });
     },
     async updateImage(id, image) {
-    return await prisma.courses.update({
-        where: { id },
-        data: { image }
-    });
-},
-    async delete (id) {
-    await prisma.courseSection.deleteMany({ where: { course_id: id } });
-    return await prisma.courses.delete({ where: { id } });
-}
+        return await prisma.courses.update({
+            where: { id },
+            data: { image }
+        });
+    },
+    async delete(id) {
+        return await prisma.courses.update({ 
+            where: { id },
+            data: {
+                deleted_at: new Date()
+            }
+        });
+    },
 }
 
 export default courseModel;

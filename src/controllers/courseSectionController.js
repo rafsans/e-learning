@@ -106,7 +106,7 @@ const updateCourseSection = async (req, res) => {
             message: "Success",
         });
     } catch (error) {
-        res.status(500).json({ status: false, message: "Internal Server Error" , data: error.message});
+        res.status(500).json({ status: false, message: "Internal Server Error" });
     }
 };
 
