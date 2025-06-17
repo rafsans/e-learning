@@ -9,10 +9,7 @@ const AuthController = {
   register: async (req, res) => {
     try {
       const body = req.body;
-      const find = await authModel.getByEmail(body.email);
-      if (find) {
-        return res.status(422).json({ status: false, message: 'Validation Error', errors: [{ field: 'email', message: 'Email already exists' }], });
-      }
+
       const { error } = registerSchema.validate(body, { abortEarly: false });
       if (error) {
         const validationError = error.details.map((err) => ({
@@ -20,6 +17,10 @@ const AuthController = {
           message: err.message,
         }));
         return res.status(422).json({ status: false, message: 'Validation Error', errors: validationError });
+      }
+      const find = await authModel.getByEmail(body.email);
+      if (find) {
+        return res.status(422).json({ status: false, message: 'Validation Error', errors: [{ field: 'email', message: 'Email already exists' }], });
       }
       const data = {
         name: body.name,
